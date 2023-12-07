@@ -2,6 +2,8 @@ import React from 'react';
 import {Dimensions, StyleSheet, View} from '../node_modules/react-native';
 import Animated, {
   Easing,
+  Extrapolate,
+  interpolate,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -41,7 +43,14 @@ const Pulse = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animation, maxDimension]);
   const animatedStyles = useAnimatedStyle(() => {
+    const opacity = interpolate(
+      animation.value,
+      [0, maxDimension / startPulseSize],
+      [1, 0.2],
+      Extrapolate.CLAMP,
+    );
     return {
+      opacity: opacity,
       transform: [{scale: animation.value}],
     };
   });
@@ -67,7 +76,7 @@ const styles = StyleSheet.create({
   },
   circle: {
     width: startPulseSize,
-    // borderRadius: startPulseSize / 2,
+    borderRadius: startPulseSize / 4,
     height: startPulseSize,
     position: 'absolute',
     backgroundColor: Colors.primaryColor,

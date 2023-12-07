@@ -23,7 +23,7 @@ const HomeScreen: React.FC = () => {
   const [value, setValue] = useState<string>(buttons[0].value);
   return (
     <L2Screen style={{}} noHorizontalMargin={true}>
-      <KeyboardAvoidingView style={{gap: 40}} behavior="padding">
+      <KeyboardAvoidingView style={{gap: 40, margin: 10}} behavior="padding">
         <L2Text style={{alignSelf: 'center'}} variant="headlineSmall">
           Configure your next game
         </L2Text>
@@ -39,10 +39,12 @@ const HomeScreen: React.FC = () => {
         <L2Input
           helperText="Optional, reaching this score ends the game"
           placeholder="Maximum points"
+          keyboardType="numeric"
         />
         <L2Input
           helperText="Optional, game ends after the provided round number"
           placeholder="Maximum rounds"
+          keyboardType="numeric"
         />
       </KeyboardAvoidingView>
     </L2Screen>
