@@ -6,5 +6,11 @@ export const Colors = {
   secondaryColor: baseColors.sys_dark_on_surface_variant,
   secondaryContainerColor: baseColors.sys_dark_secondary_container,
   containerColor: baseColors.sys_dark_surface_container,
-  textColor: baseColors.sys_dark_on_surface_variant,
+
+  primaryTextColor: baseColors.sys_dark_on_surface_variant,
+  labelTextColor: baseColors.sys_dark_on_surface_variant,
+  placeholderColor: baseColors.sys_dark_outline,
+
+  borderColor: baseColors.black,
+  errorBorder: baseColors.sys_dark_error,
 };

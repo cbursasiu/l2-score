@@ -1,4 +1,4 @@
-import {create} from 'zustand';
+import {create} from '../node_modules/zustand';
 import {Settings} from '../types/typeDeclarations';
 
 interface State {

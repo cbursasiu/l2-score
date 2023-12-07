@@ -1,8 +1,12 @@
 import React, {useRef} from 'react';
-import {StyleSheet, useWindowDimensions} from 'react-native';
+import {StyleSheet, useWindowDimensions} from '../../node_modules/react-native';
 import {useKeyboardHandler} from 'react-native-keyboard-controller';
-import Animated, {StyleProps, useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
-import {Platform} from 'react-native';
+import Animated, {
+  StyleProps,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
+import {Platform} from '../../node_modules/react-native';
 
 interface StickyKeyboardElementProps {
   children: React.ReactNode;
@@ -20,11 +24,17 @@ const StickyKeyboardElement: React.FC<StickyKeyboardElementProps> = props => {
     {
       onMove: e => {
         'worklet';
-        heightValue.value = Math.max(0, e.height - (initialPosition?.value || 0));
+        heightValue.value = Math.max(
+          0,
+          e.height - (initialPosition?.value || 0),
+        );
       },
       onInteractive: e => {
         'worklet';
-        heightValue.value = Math.max(0, e.height - (initialPosition?.value || 0));
+        heightValue.value = Math.max(
+          0,
+          e.height - (initialPosition?.value || 0),
+        );
       },
     },
     [],
@@ -43,7 +53,9 @@ const StickyKeyboardElement: React.FC<StickyKeyboardElementProps> = props => {
         containerRef.current?.measureInWindow((_x, y, _width, height) => {
           console.log('onLayout ', y, height);
           initialPosition.value =
-            Platform.OS === 'android' ? screenHeight - y - height - 24 : screenHeight - y - height;
+            Platform.OS === 'android'
+              ? screenHeight - y - height - 24
+              : screenHeight - y - height;
         });
       }}
       style={[styles.container, containerStyle, scrollViewStyle]}>

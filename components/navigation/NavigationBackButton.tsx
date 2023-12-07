@@ -1,4 +1,3 @@
-import React from 'react';
 import {goBack} from '../../services/navigationServices';
 import L2IconButton from '../L2IconButton';
 

@@ -1,6 +1,5 @@
-import * as React from 'react';
-
-import {Dimensions, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {Dimensions, StyleSheet, View} from '../node_modules/react-native';
 import Animated, {
   Easing,
   runOnJS,

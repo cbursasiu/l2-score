@@ -1,6 +1,11 @@
 import * as React from 'react';
 import {ReactNode} from 'react';
-import {SafeAreaView, StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {
+  SafeAreaView,
+  StyleProp,
+  StyleSheet,
+  ViewStyle,
+} from '../../node_modules/react-native';
 import {useTheme} from 'react-native-paper';
 import {Colors} from '../../styles/colors';
 

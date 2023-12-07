@@ -4,12 +4,12 @@
  *
  * @format
  */
-import React from 'react';
-import {StyleSheet, useColorScheme} from 'react-native';
+
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {KeyboardProvider} from 'react-native-keyboard-controller';
 import {MD3DarkTheme, MD3LightTheme, PaperProvider} from 'react-native-paper';
 import NavigationContainerWrapper from './components/navigation/NavigationContainerWrapper';
+import {StyleSheet, useColorScheme} from 'react-native';
 
 function App(): JSX.Element {
   const colorScheme = useColorScheme();
@@ -17,7 +17,7 @@ function App(): JSX.Element {
   const paperTheme = colorScheme === 'dark' ? MD3DarkTheme : MD3LightTheme;
 
   return (
-    <PaperProvider theme={paperTheme}>
+    <PaperProvider theme={MD3DarkTheme}>
       <GestureHandlerRootView style={styles.mainContainer}>
         <KeyboardProvider>
           <NavigationContainerWrapper />

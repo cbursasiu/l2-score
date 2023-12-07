@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
 import {adaptNavigationTheme, useTheme} from 'react-native-paper';
-import {NavigationContainer} from '@react-navigation/native';
+import {CommonActions, NavigationContainer} from '@react-navigation/native';
 import {
   StackNavigationOptions,
   createStackNavigator,
@@ -12,25 +11,25 @@ import {
 } from '@react-navigation/native';
 import {useStore} from '../../stores/store';
 import NavigationBackButton from './NavigationBackButton';
-import L2ProfileHeaderMenu from '../L2ProfileHeaderMenu';
 import HomeScreen from '../../screens/HomeScreen';
+// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {BottomNavigation} from 'react-native-paper';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import CurrentGameScreen from '../../screens/CurrentGameScreen';
 import WelcomeAnimationScreen from '../../screens/WelcomeAnimationScreen';
 import GamesScreen from '../../screens/GamesScreen';
 import SettingsScreen from '../../screens/SettingsScreen';
-import L2IconButton from '../L2IconButton';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {FontAwesomeIcon} from '../../node_modules/@fortawesome/react-native-fontawesome';
 import {
-  faDice,
   faGamepad,
   faHouse,
   faScrewdriverWrench,
-} from '@fortawesome/free-solid-svg-icons';
+} from '../../node_modules/@fortawesome/free-solid-svg-icons';
 import {Colors} from '../../styles/colors';
 import L2Text from '../L2Text';
-import {View} from 'react-native';
-import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {View} from '../../node_modules/react-native';
+import {IconProp} from '../../node_modules/@fortawesome/fontawesome-svg-core';
+import {Easing} from 'react-native-reanimated';
 
 const {LightTheme, DarkTheme} = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
@@ -61,35 +60,33 @@ const TabNavigationContainerWrapper: React.FC = () => {
         style={
           focused && {
             backgroundColor: Colors.secondaryContainerColor,
-            paddingHorizontal: 20,
-            paddingVertical: 5,
-            borderRadius: 100,
+            // paddingHorizontal: 20,
+            // paddingVertical: 5,
+            // borderRadius: 100,
           }
         }>
         <FontAwesomeIcon
           icon={icon}
-          color={focused ? Colors.primaryColor : Colors.textColor}
+          color={focused ? Colors.primaryColor : Colors.primaryTextColor}
           size={20}
         />
       </View>
     );
   };
 
-  const tabLabel = (label: string) => {
-    return (
-      <L2Text variant="bodySmall" style={{color: Colors.textColor}}>
-        {label}
-      </L2Text>
-    );
-  };
+  // const tabLabel = (label: string) => {
+  //   return (
+  //     <L2Text variant="bodySmall" style={{color: Colors.textColor}}>
+  //       {label}
+  //     </L2Text>
+  //   );
+  // };
 
   const tabOptions = (label: string, icon: IconProp) => {
     return {
-      title: undefined,
+      title: label,
       header: () => <></>,
-      tabBarLabel: () => {
-        return tabLabel(label);
-      },
+      tabBarLabel: () => label,
       tabBarIcon: (params: {focused: boolean; color: string; size: number}) => {
         return tabIcon(params.focused, icon);
       },
@@ -99,12 +96,59 @@ const TabNavigationContainerWrapper: React.FC = () => {
   return (
     <Tab.Navigator
       initialRouteName={Routes.HomeScreen}
-      screenOptions={{
-        tabBarStyle: {
-          backgroundColor: Colors.containerColor,
-          paddingTop: 5,
-        },
-      }}>
+      // screenOptions={{
+      //   tabBarStyle: {
+      //     backgroundColor: Colors.containerColor,
+      //     paddingTop: 5,
+      //   },
+      // }}
+      // screenOptions={{
+      //   headerShown: false,
+      // }}
+      tabBar={({navigation, state, descriptors, insets}) => (
+        <BottomNavigation.Bar
+          shifting={false}
+          navigationState={state}
+          safeAreaInsets={insets}
+          animationEasing={Easing.out(Easing.exp)}
+          onTabPress={({route, preventDefault}) => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
+
+            if (event.defaultPrevented) {
+              preventDefault();
+            } else {
+              navigation.dispatch({
+                ...CommonActions.navigate(route.name, route.params),
+                target: state.key,
+              });
+            }
+          }}
+          renderIcon={({route, focused, color}) => {
+            const {options} = descriptors[route.key];
+            if (options.tabBarIcon) {
+              return options.tabBarIcon({focused, color, size: 24});
+            }
+
+            return null;
+          }}
+          getLabelText={({route}) => {
+            const {options} = descriptors[route.key];
+            const label =
+              options.tabBarLabel !== undefined &&
+              typeof options.tabBarLabel === 'string'
+                ? options.tabBarLabel
+                : options.title !== undefined
+                ? options.title
+                : route.name;
+
+            return label;
+          }}
+        />
+      )}>
       <Tab.Screen
         name={Routes.HomeScreen}
         component={HomeScreen}
