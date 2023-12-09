@@ -13,4 +13,9 @@ export const Colors = {
 
   borderColor: baseColors.black,
   errorBorder: baseColors.sys_dark_error,
+
+  cardPrimaryBackgroundColor: baseColors.sys_dark_surface_container_low,
+  cardSecondaryBackgroundColor: baseColors.black,
+  cardSecondaryBorderColor: baseColors.sys_dark_outline_variant,
+  cardSecondarySeparatorColor: baseColors.sys_dark_on_surface_variant,
 };
