@@ -13,12 +13,12 @@ import BottomSheet, {
 } from '@gorhom/bottom-sheet';
 import {BottomSheetDefaultBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
 
-import {dimensions} from './utils/dimensions';
+import {dimensions} from '../utils/dimensions';
 
-import L2IconWithBackground from './icons/L2IconWithBackground';
+import L2IconWithBackground from '../icons/L2IconWithBackground';
 import {faX} from '@fortawesome/free-solid-svg-icons';
-import L2Spacer from './layout/L2Spacer';
-import L2Text from './L2Text';
+import L2Spacer from './L2Spacer';
+import L2Text from '../L2Text';
 
 export interface IBottomSheet {
   open(): void;
