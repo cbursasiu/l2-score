@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {forwardRef, useState} from 'react';
+import {Ref, forwardRef, useImperativeHandle, useState} from 'react';
 import {
   StyleSheet,
   TextStyle,
@@ -17,59 +17,78 @@ export interface CustomInputFieldProps extends TextInputProps {
   containerStyle?: ViewStyle;
 }
 
-const L2Input = forwardRef((props: CustomInputFieldProps, ref: any) => {
-  const {
-    containerStyle,
-    label,
-    helperText,
-    errorText,
-    contentStyle,
-    ...restProps
-  } = props;
-  const [value, setValue] = useState<string>('');
+const L2Input = forwardRef(
+  (props: CustomInputFieldProps, ref: Ref<{getValue: () => string}>) => {
+    const {
+      containerStyle,
+      label,
+      helperText,
+      errorText,
+      contentStyle,
+      onChangeText,
+      value,
+      ...restProps
+    } = props;
+    const [inputValue, setInputValue] = useState<string>(value || '');
 
-  return (
-    <View style={containerStyle}>
-      <TextInput
-        ref={ref}
-        mode="flat"
-        value={value}
-        label={label && <L2Text variant="bodySmall">{label}</L2Text>}
-        underlineStyle={styles.underlineStyle}
-        contentStyle={{...styles.contentStyle, ...contentStyle}}
-        selectionColor={Colors.primaryTextColor}
-        cursorColor={Colors.primaryTextColor}
-        placeholderTextColor={Colors.placeholderColor}
-        onChange={event => {
-          setValue(event.nativeEvent.text);
-        }}
-        right={
-          <TextInput.Icon
-            icon="close-circle-outline"
-            onPress={() => {
-              setValue('');
-            }}
-          />
-        }
-        {...restProps}
-      />
-      {helperText ? (
-        <L2Text variant="bodySmall" style={[styles.subText, styles.helperText]}>
-          {helperText}
-        </L2Text>
-      ) : (
-        <></>
-      )}
-      {errorText ? (
-        <L2Text style={styles.subText} variant="bodySmall">
-          {errorText}
-        </L2Text>
-      ) : (
-        <></>
-      )}
-    </View>
-  );
-});
+    useImperativeHandle(
+      ref,
+      () => {
+        return {
+          getValue() {
+            return inputValue;
+          },
+        };
+      },
+      [inputValue],
+    );
+
+    return (
+      <View style={containerStyle}>
+        <TextInput
+          mode="flat"
+          value={inputValue}
+          label={label && <L2Text variant="bodySmall">{label}</L2Text>}
+          underlineStyle={styles.underlineStyle}
+          contentStyle={{...styles.contentStyle, ...contentStyle}}
+          selectionColor={Colors.primaryTextColor}
+          cursorColor={Colors.primaryTextColor}
+          placeholderTextColor={Colors.placeholderColor}
+          onChangeText={text => {
+            setInputValue(text);
+            onChangeText?.(text);
+          }}
+          right={
+            <TextInput.Icon
+              icon="close-circle-outline"
+              onPress={() => {
+                setInputValue('');
+                onChangeText?.('');
+              }}
+            />
+          }
+          {...restProps}
+        />
+        {helperText ? (
+          <L2Text
+            variant="bodySmall"
+            style={[styles.subText, styles.helperText]}>
+            {helperText}
+          </L2Text>
+        ) : (
+          <></>
+        )}
+        {errorText ? (
+          <L2Text style={styles.subText} variant="bodySmall">
+            {errorText}
+          </L2Text>
+        ) : (
+          <></>
+        )}
+      </View>
+    );
+  },
+);
 
 export default L2Input;
 

@@ -34,6 +34,7 @@ export const dimensions = {
   },
   buttons: {
     smallSecondaryMargin: scale(5),
+    colorButton: scale(36),
     height: {
       button: scale(54),
       uploadButton: scale(48),
@@ -51,6 +52,7 @@ export const dimensions = {
   },
   gap: {
     betweenElements: scale(20),
+    betweenPlayers: scale(8),
   },
   borderRadius: {
     smallBorderRadius: scale(6),

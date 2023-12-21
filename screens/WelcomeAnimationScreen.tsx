@@ -11,7 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {useEffect} from 'react';
 import {Colors} from '../styles/colors';
-import {useStore} from '../stores/store';
+import {useGeneralStore} from '../stores/stores';
 import {navigate} from '../services/navigationServices';
 import {Routes} from '../components/navigation/NavigationContainerWrapper';
 
@@ -19,7 +19,7 @@ const startPulseSize = 300;
 
 const Pulse = () => {
   const animation = useSharedValue(0);
-  const store = useStore();
+  const store = useGeneralStore();
   const [isFinished, setIsFinished] = React.useState(false);
   const maxDimension = Math.sqrt(
     Math.pow(Dimensions.get('window').width, 2) +

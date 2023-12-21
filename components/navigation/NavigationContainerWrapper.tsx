@@ -9,7 +9,7 @@ import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
 } from '@react-navigation/native';
-import {useStore} from '../../stores/store';
+import {useGeneralStore} from '../../stores/stores';
 import NavigationBackButton from './NavigationBackButton';
 import HomeScreen from '../../screens/HomeScreen';
 // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -142,8 +142,8 @@ const TabNavigationContainerWrapper: React.FC = () => {
               typeof options.tabBarLabel === 'string'
                 ? options.tabBarLabel
                 : options.title !== undefined
-                ? options.title
-                : route.name;
+                  ? options.title
+                  : route.name;
 
             return label;
           }}
@@ -170,7 +170,7 @@ const TabNavigationContainerWrapper: React.FC = () => {
 
 const NavigationContainerWrapper: React.FC = () => {
   const theme = useTheme();
-  const state = useStore();
+  const state = useGeneralStore();
 
   const screenOptions: StackNavigationOptions = {
     headerBackTitleVisible: false,

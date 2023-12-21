@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
 import {Button, useTheme} from 'react-native-paper';
-import {dimensions} from './utils/dimensions';
+import {dimensions} from '../utils/dimensions';
 
 interface L2ButtonProps extends React.ComponentProps<typeof Button> {
   variant?:
@@ -27,14 +27,13 @@ const modalMap = {
 
 const L2Button: FC<L2ButtonProps> = props => {
   const theme = useTheme();
-  const {variant = 'primary', style, children, ...restProps} = props;
+  const {variant = 'primary', children, ...restProps} = props;
   return variant === 'danger' ? (
     <Button
       mode="contained"
       buttonColor={theme.colors.errorContainer}
       textColor={theme.colors.error}
-      {...restProps}
-      style={style}>
+      {...restProps}>
       {children}
     </Button>
   ) : (
